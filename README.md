@@ -141,6 +141,20 @@ We can run the project using the following command:
 docker compose up
 ```
 
+### Sending Request to Web-Server
+
+### Interacting with Docker
+
+Here is the list of my images. `notes-web` and `docker.arvancloud.ir/postgres` are used to deploy this project.
+
+![Docker Images](./images/docker-images.png)
+
 Here are the containers running:
 
-![Docker PS](./images/docker-ps.png)
+![Docker Containers](./images/docker-containers.png)
+
+And here is the result of running `ls` command in the web server's container.
+
+![Docker Exec](./images/docker-exec.png)
+
+### Questions
