@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!tdsl@k!4d6-v47v03e(fahg#@j@49gfa8zp#gbiej51ge#ua!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = environ.get("DEBUG", "true").lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(" ")
 
 
 # Application definition
@@ -76,11 +77,16 @@ WSGI_APPLICATION = 'notes.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "USER": environ.get("SQL_USER", "user"),
+        "PASSWORD": environ.get("SQL_PASSWORD", "password"),
+        "HOST": environ.get("SQL_HOST", "localhost"),
+        "PORT": environ.get("SQL_PORT", "5432"),
     }
 }
+
 
 
 # Password validation

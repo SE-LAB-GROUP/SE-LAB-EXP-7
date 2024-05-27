@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: ["./wait-for-it.sh", "db:5432", "--", "bash", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DEBUG: False
+      ALLOWED_HOSTS: localhost 127.0.0.1
+      SQL_ENGINE: django.db.backends.postgresql
+      SQL_DATABASE: se_lab_exp_7
+      SQL_USER: se_lab_exp_7_user
+      SQL_PASSWORD: se_lab_exp_7_pass
+      SQL_HOST: db
+      SQL_PORT: 5432
+
+  db:
+    image: docker.arvancloud.ir/postgres:16.3
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: se_lab_exp_7
+      POSTGRES_USER: se_lab_exp_7_user
+      POSTGRES_PASSWORD: se_lab_exp_7_pass
+
+volumes:
+  db:
