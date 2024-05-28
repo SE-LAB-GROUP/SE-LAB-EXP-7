@@ -143,7 +143,7 @@ docker compose up
 
 ### Sending Request to Web-Server
 
-### Interacting with Docker
+#### Interacting with Docker
 
 Here is the list of my images. `notes-web` and `docker.arvancloud.ir/postgres` are used to deploy this project.
 
@@ -156,6 +156,30 @@ Here are the containers running:
 And here is the result of running `ls` command in the web server's container.
 
 ![Docker Exec](./images/docker-exec.png)
+
+#### Requests and results
+
+curl -X POST "http://localhost:8000/users/create/" -d "username=user1&password=1234":
+![User Creation](./images/user-creation.png)
+
+curl -X POST "http://localhost:8000/users/login/" -d "username=user1&password=1234" -v
+![User Login](./images/user-login.png)
+
+curl -X POST "http://localhost:8000/notes/create/" -H "Cookie: sessionid=hn7m53pz3bbu7ae63oxtatb1ozjnjawb" -d "title=title1&body=body1"
+![Create Note](./images/create-note-1.png)
+
+curl -X POST "http://localhost:8000/notes/create/" -H "Cookie: sessionid=hn7m53pz3bbu7ae63oxtatb1ozjnjawb" -d "title=title2&body=body2"
+![Create Note 2](./images/create-note-2.png)
+
+curl -X GET "http://localhost:8000/notes/" -H "Cookie: sessionid=hn7m53pz3bbu7ae63oxtatb1ozjnjawb"
+![Get All Notes](./images/get-all-notes.png)
+
+curl -X GET "http://localhost:8000/notes/1/delete/" -H "Cookie: sessionid=hn7m53pz3bbu7ae63oxtatb1ozjnjawb"
+![Delete Notes](./images/delete-note.png)
+
+curl -X GET "http://localhost:8000/notes/" -H "Cookie: sessionid=hn7m53pz3bbu7ae63oxtatb1ozjnjawb"
+![Get All Notes 2](./images/get-all-notes-2.png)
+
 
 ### Questions
 
